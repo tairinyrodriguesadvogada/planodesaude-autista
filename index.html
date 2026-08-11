@@ -739,7 +739,9 @@ function tsCalcular() {
   var meses  = parseFloat(document.getElementById('ts-meses').value) || 0;
   if (mensal <= 0 || meses <= 0) { alert('Preencha todos os campos.'); return; }
 
-  var material = mensal * meses;
+  /* Reparacao por fato do servico prescreve em 5 anos — art. 27 do CDC. */
+  var mesesRessarciveis = Math.min(meses, 60);
+  var material = mensal * mesesRessarciveis;
   var moraisMin = 5000, moraisMax = 15000;
   var totalMin = material + moraisMin;
   var totalMax = material + moraisMax;
@@ -750,6 +752,7 @@ function tsCalcular() {
   document.getElementById('ts-itens').innerHTML =
     '<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06)"><span style="font-size:13px;color:rgba(255,255,255,0.6)">Tratamentos negados (reembolso)</span><span style="font-size:17px;font-weight:700;color:#C9A84C">'+fmt(material)+'</span></div>'+
     '<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06)"><span style="font-size:13px;color:rgba(255,255,255,0.6)">Danos morais estimados</span><span style="font-size:17px;font-weight:700;color:#C9A84C">'+fmt(moraisMin)+' – '+fmt(moraisMax)+'</span></div>';
+  document.getElementById('ts-itens').innerHTML += (meses > 60 ? '<div style="margin-top:10px;padding:12px;background:rgba(255,255,255,0.04);border-left:3px solid #C9A84C"><p style="font-size:12px;color:rgba(255,255,255,0.62);line-height:1.6;margin:0">Considerados apenas os últimos <strong style="color:rgba(255,255,255,0.85)">5 anos</strong> (art. 27 do CDC).</p></div>' : '') + '<div style="margin-top:16px;padding:14px;background:rgba(255,255,255,0.04);border-left:3px solid #C9A84C"><p style="font-size:12px;color:rgba(255,255,255,0.62);line-height:1.65;margin:0">⚠️ <strong style="color:rgba(255,255,255,0.85)">Estimativa parcial.</strong> O valor final de uma ação costuma superar esta conta, porque só a análise dos seus documentos revela todos os direitos do caso. Não substitui análise jurídica individual.</p></div>';
   document.getElementById('ts-total').textContent = fmt(totalMin)+' – '+fmt(totalMax);
   document.getElementById('ts-result').style.display = 'block';
 }
