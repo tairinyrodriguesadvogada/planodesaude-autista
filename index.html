@@ -1331,7 +1331,7 @@ function calcPlano(){
   document.getElementById('ps-r-reimb').textContent = meses > 0 ? fmt2(reimb) : 'R$ 0';
   document.getElementById('ps-r-reimb-sub').textContent = meses > 0 ? 'referente a ' + meses + ' m\u00eas' + (meses>1?'es':'') + ' pagos do pr\u00f3prio bolso' : 'nenhum m\u00eas preenchido';
   document.getElementById('ps-r-eco').textContent = fmt2(eco);
-  document.getElementById('ps-r-eco-aviso').style.display = 'block';
+  var _psAv = document.getElementById('ps-r-eco-aviso'); if(_psAv) _psAv.style.display = 'block';
   document.getElementById('ps-result').style.display = 'block';
   document.getElementById('ps-result').scrollIntoView({behavior:'smooth',block:'nearest'});
 }
