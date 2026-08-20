@@ -966,64 +966,7 @@ document.querySelectorAll('.reveal').forEach(function(el){rObs.observe(el);});
 
 
 
-<section class="sec-calc" id="calcular">
-  <div class="calc-inner">
-    <div class="calc-header">
-      <span class="sec-chip">💰 Calculadora de Impacto</span>
-      <h2 class="sec-h">Calcule quanto você pode <em>receber de volta</em></h2>
-      <p class="calc-sub" style="color:var(--texto3);font-size:16px;margin-top:8px">Preencha com seus valores reais e veja o que o plano te deve</p>
-    </div>
 
-    <div class="calc2-social" style="justify-content:center;margin-bottom:28px">
-      <div class="calc2-social-badge">
-        <span class="calc2-social-dot"></span>
-        <span style="font-size:13px;color:rgba(255,255,255,0.85)"><strong id="sc-count" style="color:#fff">31</strong> famílias calculando agora</span>
-      </div>
-      <div style="font-size:13px;color:var(--texto3)">🧮 <strong id="sc-total" style="color:rgba(255,255,255,0.7)">2.214</strong> cálculos realizados</div>
-    </div>
-
-    <div class="calc2-card">
-      <p class="calc2-title">🏥 Simulador de Cobertura Negada</p>
-      <p class="calc2-sub">Estimativa · Plano de Saúde · TEA</p>
-
-      <div class="calc2-row">
-        <div>
-          <label class="calc2-label">Gasto mensal com terapias (R$)</label>
-          <input class="calc2-input" type="text" id="ps-mensal" oninput="maskBRL(this)" inputmode="numeric" placeholder="Ex: 2400" min="0">
-          <span style="font-size:10px;color:#7a6a9a;margin-top:-10px;display:block">Some ABA + fono + TO + psico que paga do bolso</span>
-        </div>
-        <div>
-          <label class="calc2-label">Meses que o plano está negando</label>
-          <input class="calc2-input" type="text" id="ps-meses" oninput="maskInt(this)" inputmode="numeric" placeholder="Ex: 8" min="0">
-        </div>
-      </div>
-      <button class="calc2-btn" onclick="calcPlano()">🏥 Calcular quanto posso recuperar</button>
-
-      <div class="calc2-result" id="ps-result">
-        <div class="calc2-destaque">
-          <div class="calc2-res-label">Impacto financeiro estimado</div>
-          <div class="calc2-res-val" id="ps-r-total">—</div>
-          <div class="calc2-res-sub">entre reembolso passado + economia futura</div>
-        </div>
-        <div class="calc2-grid">
-          <div class="calc2-item">
-            <div class="calc2-item-label">Reembolso possível</div>
-            <div class="calc2-item-val" id="ps-r-reimb">—</div>
-            <div class="calc2-item-sub" id="ps-r-reimb-sub">dos meses já pagos</div>
-          </div>
-          <div class="calc2-item">
-            <div class="calc2-item-label">Economia futura estimada (12 meses)</div>
-            <div class="calc2-item-val" id="ps-r-eco">—</div>
-            <div class="calc2-item-sub" style="color:#f0a500">* projeção — não é o valor da ação</div>
-          </div>
-        </div>
-        <a href="https://wa.me/5561920046994?text=Ol%C3%A1%2C+Dra.+Tairiny%21+Gostaria+de+uma+consulta+inicial." target="_blank" class="calc2-cta">💬 Quero minha consulta inicial com a Dra. Tairiny</a>
-        <p class="calc2-disclaimer">⚠️ Estimativa baseada nos valores informados. Não substitui análise jurídica individualizada. Honorários são devidos pelo serviço jurídico.</p>
-        <button class="calc2-reset" onclick="resetPlano()">↩ Nova simulação</button>
-      </div>
-    </div>
-  </div>
-</section>
 
 <section id="impacto">
   <div class="sec-inner">
@@ -1462,26 +1405,8 @@ document.querySelectorAll('.reveal').forEach(function(el){rObs.observe(el);});
 <script>
 function fmt2(n){ return n.toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0}); }
 function parseNum2(s){ if(!s) return 0; s = String(s).trim().replace(/\./g,'').replace(',','.'); return parseFloat(s)||0; }
-function calcPlano(){
-  var mensal = parseNum2(document.getElementById('ps-mensal').value);
-  var meses = parseInt(document.getElementById('ps-meses').value)||0;
-  if(mensal < 1){ alert('Informe o valor mensal gasto com terapias.'); return; }
-  var reimb = mensal * meses;
-  var eco = mensal * 12;
-  var total = reimb + eco;
-  document.getElementById('ps-r-total').textContent = fmt2(total);
-  document.getElementById('ps-r-reimb').textContent = meses > 0 ? fmt2(reimb) : 'R$ 0';
-  document.getElementById('ps-r-reimb-sub').textContent = meses > 0 ? 'referente a ' + meses + ' m\u00eas' + (meses>1?'es':'') + ' pagos do pr\u00f3prio bolso' : 'nenhum m\u00eas preenchido';
-  document.getElementById('ps-r-eco').textContent = fmt2(eco);
-  var _psAv = document.getElementById('ps-r-eco-aviso'); if(_psAv) _psAv.style.display = 'block';
-  document.getElementById('ps-result').style.display = 'block';
-  document.getElementById('ps-result').scrollIntoView({behavior:'smooth',block:'nearest'});
-}
-function resetPlano(){
-  document.getElementById('ps-mensal').value='';
-  document.getElementById('ps-meses').value='';
-  document.getElementById('ps-result').style.display='none';
-}
+
+
 (function(){
   var b=Math.floor(Math.random()*30)+18, t=Math.floor(Math.random()*500)+1800;
   function upd(){
